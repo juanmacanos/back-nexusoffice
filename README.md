@@ -95,6 +95,8 @@ El servidor corre por defecto en localhost:8080
 - Roles más granularizados (responsables por equipo).
 - Validación por departamento o turnos.
 - Tests de integración automáticos con Postgres real.
+- Recuperar contraseña
+- REFRESH Token
 ---
 
 ## 📄 Licencia
