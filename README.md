@@ -48,7 +48,8 @@ Backend de Nexus Office, una solución para la gestión de puestos de trabajo en
 
 ## ▶️ Instrucciones de uso
 
-bash
+```bash 
+
 # Clona el repositorio
 git clone https://github.com/juanmacanos/back-nexusoffice.git
 
@@ -57,8 +58,9 @@ cd back-nexusoffice
 
 # Ejecuta con Maven
 ./mvnw spring-boot:run
-
+```
 El servidor corre por defecto en localhost:8080
+
 ---
 
 ## 🔗 Endpoints clave
