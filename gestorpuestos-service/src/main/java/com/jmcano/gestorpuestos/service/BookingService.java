@@ -152,6 +152,7 @@ public class BookingService {
                 .map(place -> {
                     Booking booking = bookingMap.get(place.getId());
                     boolean occupied = booking != null;
+                    Long userId = occupied ? booking.getUser().getId() : null;
                     String userName = occupied ? booking.getUser().getName() : null;
                     Long preferredUserId = !Objects.isNull(place.getPreferredUser())?place.getPreferredUser().getId():null;
                     return new PlaceAvailabilityResponse(
@@ -160,6 +161,7 @@ public class BookingService {
                             place.getX(),
                             place.getY(),
                             occupied,
+                            userId,
                             userName,
                             preferredUserId
                     );

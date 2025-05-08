@@ -11,6 +11,7 @@ public class PlaceAvailabilityResponse {
     private int x;
     private int y;
     private boolean occupied;
-    private String username;
+    private Long userId;
+    private String userName;
     private Long preferredUserId;
 }
