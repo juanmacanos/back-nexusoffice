@@ -14,10 +14,11 @@ public class JwtService {
     private static final long EXPIRATION = 86400000;
     private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(String username, String role){
+    public String generateToken(String username, String role, Long userId){
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)  // <- Aquí añadimos el claim extra
+                .claim("userId", userId) // 👈 Añades el ID como claim
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(KEY)
