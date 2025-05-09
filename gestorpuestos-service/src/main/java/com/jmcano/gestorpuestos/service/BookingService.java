@@ -61,11 +61,9 @@ public class BookingService {
             Booking currentBooking = occupied.get(preferredPlace.getId());
 
             if (currentBooking == null) {
-                // 🟢 El sitio preferido está libre
                 assignedPlace = preferredPlace;
                 break;
             } else {
-                // 🔴 El sitio preferido está ocupado
                 User occupyingUser = currentBooking.getUser();
 
                 // Buscar sitio libre para recolocar al usuario desplazado
@@ -75,7 +73,6 @@ public class BookingService {
                         .orElse(null);
 
                 if (alternative != null) {
-                    // ✅ Hay sitio libre → recolocar
                     bookingRepository.delete(currentBooking);
                     bookingRepository.flush();
 
@@ -93,7 +90,6 @@ public class BookingService {
         }
 
         if (assignedPlace == null) {
-            // ⚪ No tiene sitio preferido o están todos ocupados sin hueco para desplazar
             assignedPlace = allPlaces.stream()
                     .filter(p -> !occupied.containsKey(p.getId()))
                     .findFirst()
@@ -163,7 +159,31 @@ public class BookingService {
                             occupied,
                             userId,
                             userName,
-                            preferredUserId
+                            preferredUserId,
+                            date
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<PlaceAvailabilityResponse> getMonthlyAvailability(LocalDate fromDate, LocalDate toDate) {
+        List<Place> places = placeRepository.findAll();
+        List<Booking> bookings = bookingRepository.findAllByDateBetween(fromDate, toDate);
+
+        return bookings.stream()
+                .map(booking -> {
+                    Place place = booking.getPlace();
+                    User user = booking.getUser();
+                    return new PlaceAvailabilityResponse(
+                            place.getId(),
+                            place.getName(),
+                            place.getX(),
+                            place.getY(),
+                            true,
+                            user.getId(),
+                            user.getName(),
+                            place.getPreferredUser() != null ? place.getPreferredUser().getId() : null,
+                            booking.getDate()
                     );
                 })
                 .collect(Collectors.toList());

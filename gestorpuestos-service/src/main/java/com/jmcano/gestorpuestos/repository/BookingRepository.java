@@ -19,4 +19,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findAllByUserOrderByDateDesc(User user);
 
+    List<Booking> findAllByDateBetween(LocalDate start, LocalDate end);
+
 }

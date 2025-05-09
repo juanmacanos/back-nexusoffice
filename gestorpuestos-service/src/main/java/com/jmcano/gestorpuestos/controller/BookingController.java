@@ -68,4 +68,15 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getAvailability(date));
     }
 
+    @GetMapping("/monthly-availability")
+    public ResponseEntity<List<PlaceAvailabilityResponse>> getMonthlyAvailability(
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
+        LocalDate fromDate = LocalDate.of(year, month, 1);
+        LocalDate toDate = fromDate.withDayOfMonth(fromDate.lengthOfMonth());
+        return ResponseEntity.ok(bookingService.getMonthlyAvailability(fromDate, toDate));
+    }
+
+
 }
